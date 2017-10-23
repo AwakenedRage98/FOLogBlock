@@ -16,10 +16,11 @@ public class MySQLConnectionPool implements Closeable {
         ds.setJdbcUrl(url);
         ds.setUsername(user);
         ds.setPassword(password);
-
+        ds.setAllowPoolSuspension(true);
         ds.setMinimumIdle(2);
         ds.setPoolName("LogBlock-Connection-Pool");
 
+        ds.addDataSourceProperty("failOverReadOnly", "false");
         ds.addDataSourceProperty("useUnicode", "true");
         ds.addDataSourceProperty("characterEncoding", "utf-8");
         ds.addDataSourceProperty("rewriteBatchedStatements", "true");

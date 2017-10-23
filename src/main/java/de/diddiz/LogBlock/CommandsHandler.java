@@ -54,17 +54,17 @@ public class CommandsHandler implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         try {
             if (args.length == 0) {
-                sender.sendMessage(ChatColor.LIGHT_PURPLE + "LogBlock v" + logblock.getDescription().getVersion() + " by DiddiZ");
+                sender.sendMessage(ChatColor.LIGHT_PURPLE + "FOLogBlock v" + logblock.getDescription().getVersion() + " by Kryptoaware and DiddiZ");
                 sender.sendMessage(ChatColor.LIGHT_PURPLE + "Type /lb help for help");
             } else {
                 final String command = args[0].toLowerCase();
                 if (command.equals("help")) {
-                    sender.sendMessage(ChatColor.DARK_AQUA + "LogBlock Help:");
+                    sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Help:");
                     sender.sendMessage(ChatColor.GOLD + "For the commands list type '/lb commands'");
                     sender.sendMessage(ChatColor.GOLD + "For the parameters list type '/lb params'");
                     sender.sendMessage(ChatColor.GOLD + "For the list of permissions you got type '/lb permissions'");
                 } else if (command.equals("commands")) {
-                    sender.sendMessage(ChatColor.DARK_AQUA + "LogBlock Commands:");
+                    sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Commands:");
                     sender.sendMessage(ChatColor.GOLD + "/lb tool -- Gives you the lb tool");
                     sender.sendMessage(ChatColor.GOLD + "/lb tool [on|off] -- Enables/Disables tool");
                     sender.sendMessage(ChatColor.GOLD + "/lb tool [params] -- Sets the tool lookup query");
@@ -81,7 +81,7 @@ public class CommandsHandler implements CommandExecutor {
                     sender.sendMessage(ChatColor.GOLD + "/lb me -- Displays your stats");
                     sender.sendMessage(ChatColor.GOLD + "Look at github.com/LogBlock/LogBlock/wiki/Commands for the full commands reference");
                 } else if (command.equals("params")) {
-                    sender.sendMessage(ChatColor.DARK_AQUA + "LogBlock Query Parameters:");
+                    sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Query Parameters:");
                     sender.sendMessage(ChatColor.GOLD + "Use doublequotes to escape a keyword: world \"world\"");
                     sender.sendMessage(ChatColor.GOLD + "player [name1] <name2> <name3> -- List of players");
                     sender.sendMessage(ChatColor.GOLD + "block [type1] <type2> <type3> -- List of block types");

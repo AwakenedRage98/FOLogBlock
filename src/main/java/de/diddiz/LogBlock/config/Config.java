@@ -136,7 +136,7 @@ public class Config {
             }
         }
         logblock.saveConfig();
-        url = "jdbc:mysql://" + config.getString("mysql.host") + ":" + config.getInt("mysql.port") + "/" + getStringIncludingInts(config, "mysql.database");
+        url = "jdbc:mysql://" + config.getString("mysql.host") + ":" + config.getInt("mysql.port") + "," + config.getString("mysql.backup") + ":" + config.getInt("mysql.backupport") + "/" + getStringIncludingInts(config, "mysql.database");
         user = getStringIncludingInts(config, "mysql.user");
         password = getStringIncludingInts(config, "mysql.password");
         delayBetweenRuns = config.getInt("consumer.delayBetweenRuns", 2);

@@ -95,7 +95,8 @@ public class BukkitUtils {
         relativeTopFallables.add(Material.GRAVEL);
         relativeTopFallables.add(Material.DRAGON_EGG);
         relativeTopFallables.add(Material.ANVIL);
-        relativeTopFallables.add(Material.CONCRETE_POWDER);
+        if(Bukkit.getServerIcon().toString().contains("1.12"))
+            relativeTopFallables.add(Material.CONCRETE_POWDER);
 
         // Blocks that break falling entities
         fallingEntityKillers = new HashSet<Material>(32);
