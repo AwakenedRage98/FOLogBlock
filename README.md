@@ -1,4 +1,9 @@
-LogBlock
+FOLogblock
+==========
+FOLogblock is a fork of Logblock that allows the use of failover database connections with seamless handoff between replicating database servers.
+
+
+What is LogBlock?
 ==========
 
 This plugin logs block changes such as breaking, placing, modifying, or burning to a MySQL Database. It can be used as an anti-griefing tool to find out who made a particular edit, or even roll back changes by certain players.
