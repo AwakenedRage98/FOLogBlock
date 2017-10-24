@@ -69,10 +69,14 @@ public class Config {
         }
         def.put("loggedWorlds", worldNames);
         def.put("mysql.host", "localhost");
+        def.put("mysql.backup", "backup_host here");
+        def.put("mysql.backupport", 3306);
         def.put("mysql.port", 3306);
         def.put("mysql.database", "minecraft");
         def.put("mysql.user", "username");
         def.put("mysql.password", "pass");
+        def.put("fo.servers", 2);
+        def.put("fo.enabled", false);
         def.put("consumer.delayBetweenRuns", 2);
         def.put("consumer.forceToProcessAtLeast", 200);
         def.put("consumer.timePerRun", 1000);
@@ -136,7 +140,18 @@ public class Config {
             }
         }
         logblock.saveConfig();
-        url = "jdbc:mysql://" + config.getString("mysql.host") + ":" + config.getInt("mysql.port") + "," + config.getString("mysql.backup") + ":" + config.getInt("mysql.backupport") + "/" + getStringIncludingInts(config, "mysql.database");
+        if(config.getBoolean("fo.enabled") == true)
+        {
+            if(config.getInt("fo.servers") == 2)
+            {
+                url = "jdbc:mysql://" + config.getString("mysql.host") + ":" + config.getInt("mysql.port") + "," + config.getString("mysql.backup") + ":" + config.getInt("mysql.backupport") + "/" + getStringIncludingInts(config, "mysql.database");
+            }
+        }
+        else
+        {
+            url = "jdbc:mysql://" + config.getString("mysql.host") + ":" + config.getInt("mysql.port") + "/" + getStringIncludingInts(config, "mysql.database");
+        }
+
         user = getStringIncludingInts(config, "mysql.user");
         password = getStringIncludingInts(config, "mysql.password");
         delayBetweenRuns = config.getInt("consumer.delayBetweenRuns", 2);
