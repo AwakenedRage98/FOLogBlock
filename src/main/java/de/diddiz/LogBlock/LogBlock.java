@@ -36,7 +36,6 @@ public class LogBlock extends JavaPlugin {
     private MySQLConnectionPool pool;
     private Consumer consumer = null;
     private CommandsHandler commandsHandler;
-    private obtainIP obtainIP;
     private Updater updater = null;
     private Timer timer = null;
     private boolean errorAtLoading = false, noDb = false, connected = true;

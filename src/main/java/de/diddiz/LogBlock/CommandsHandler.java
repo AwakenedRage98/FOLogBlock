@@ -60,18 +60,46 @@ public class CommandsHandler implements CommandExecutor {
         }
 
     }
+    public String getMasterPosition()
+    {
+        try
+        {
+         return logblock.st.executeQuery("SHOW MASTER STATUS").getString("Position");
+        }
+        catch(java.sql.SQLException ex)
+        {
+            return "Invalid";
+        }
+    }
+
+    public String getMasterFile()
+    {
+        try
+        {
+            return logblock.st.executeQuery("SHOW MASTER STATUS").getString("File");
+        }
+        catch(java.sql.SQLException ex)
+        {
+            return "Invalid";
+        }
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         try {
             if (args.length == 0) {
-                sender.sendMessage(ChatColor.LIGHT_PURPLE + "FOLogBlock v" + logblock.getDescription().getVersion() + " by Kryptoaware and DiddiZ");
+                sender.sendMessage(ChatColor.LIGHT_PURPLE + "FOLogBlock " + logblock.getDescription().getVersion() + " by Kryptoaware and DiddiZ");
                 sender.sendMessage(ChatColor.LIGHT_PURPLE + "Type /lb help for help");
             } else {
                 final String command = args[0].toLowerCase();
                 if(command.equals("repip"))
                 {
                     sender.sendMessage(ChatColor.GOLD + getDBServer());
+                }
+                if(command.equals("master"))
+                {
+                    sender.sendMessage(ChatColor.GOLD + "Master Position: " + getMasterPosition());
+                    sender.sendMessage(ChatColor.GOLD + "Master File: " + getMasterFile());
                 }
                 if (command.equals("help")) {
                     sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Help:");
