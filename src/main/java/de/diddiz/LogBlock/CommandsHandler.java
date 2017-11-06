@@ -49,6 +49,17 @@ public class CommandsHandler implements CommandExecutor {
         scheduler = logblock.getServer().getScheduler();
         questioner = (LogBlockQuestioner) logblock.getServer().getPluginManager().getPlugin("LogBlockQuestioner");
     }
+    public String getDBServer()
+    {
+        try{
+            return logblock.st.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+        }
+        catch(java.sql.SQLException ex)
+        {
+            return "INVALID";
+        }
+
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -58,6 +69,10 @@ public class CommandsHandler implements CommandExecutor {
                 sender.sendMessage(ChatColor.LIGHT_PURPLE + "Type /lb help for help");
             } else {
                 final String command = args[0].toLowerCase();
+                if(command.equals("repip"))
+                {
+                    sender.sendMessage(ChatColor.GOLD + getDBServer());
+                }
                 if (command.equals("help")) {
                     sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Help:");
                     sender.sendMessage(ChatColor.GOLD + "For the commands list type '/lb commands'");
