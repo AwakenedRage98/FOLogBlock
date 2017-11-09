@@ -1,5 +1,5 @@
 name: FOLogblock
-version: 0.5.1
+version: 0.5.3
 author: DiddiZ
 authors: [kryptoware,md_5, ammar2, frymaster]
 website: http://dev.bukkit.org/server-mods/logblock/
@@ -43,6 +43,9 @@ permissions:
   logblock.me:
     description: 'Allows seeing of your own stats with /lb me'
     default: true
+  logblock.replication:
+    description: 'Allows seeing of your own SQL servers master status'
+    default: op
   logblock.ignoreRestrictions:
     description: 'Allows to ignore the rollback restrictions rollback.maxTime and rollback.maxArea'
     default: op

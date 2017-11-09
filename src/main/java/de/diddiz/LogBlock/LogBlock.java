@@ -33,7 +33,7 @@ public class LogBlock extends JavaPlugin {
     private static LogBlock logblock = null;
     public HikariPreparedStatementProxy st;
     public HikariResultSetProxy rs;
-    private MySQLConnectionPool pool;
+    public MySQLConnectionPool pool;
     private Consumer consumer = null;
     private CommandsHandler commandsHandler;
     private Updater updater = null;
