@@ -20,10 +20,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +37,8 @@ import static org.bukkit.Bukkit.getLogger;
 import static org.bukkit.Bukkit.getServer;
 
 public class CommandsHandler implements CommandExecutor {
+    public PreparedStatement pst;
+    public ResultSet rs;
     private final LogBlock logblock;
     private final BukkitScheduler scheduler;
     private final LogBlockQuestioner questioner;
@@ -49,15 +48,103 @@ public class CommandsHandler implements CommandExecutor {
         scheduler = logblock.getServer().getScheduler();
         questioner = (LogBlockQuestioner) logblock.getServer().getPluginManager().getPlugin("LogBlockQuestioner");
     }
+    public String getDBServer()
+    {
+        try{
+            logblock.getLogger().info("Preparing statement");
+            pst = logblock.pool.getConnection().prepareStatement("SHOW VARIABLES like 'bind_address';");
+            logblock.getLogger().info("Executing query");
+            rs = pst.executeQuery();
+            logblock.getLogger().info("Returning input");
+            while(rs.next())
+            {
+                return rs.getString(2);
+            }
+            return "INVALID";
+          //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+        }
+        catch(java.sql.SQLException ex)
+        {
+
+            return ex.getMessage().toString();
+        }
+
+    }
+
+    public String getMasterPosition()
+    {
+        try{
+            logblock.getLogger().info("Preparing statement");
+            pst = logblock.pool.getConnection().prepareStatement("SHOW MASTER STATUS");
+            logblock.getLogger().info("Executing query");
+            rs = pst.executeQuery();
+            logblock.getLogger().info("Returning input");
+            while(rs.next())
+            {
+                return rs.getObject("Position").toString();
+            }
+            return "INVALID";
+            //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+        }
+        catch(java.sql.SQLException ex)
+        {
+
+            return ex.getMessage().toString();
+        }
+    }
+
+    public String getMasterFile()
+    {
+        try{
+            logblock.getLogger().info("Preparing statement");
+            pst = logblock.pool.getConnection().prepareStatement("SHOW MASTER STATUS");
+            logblock.getLogger().info("Executing query");
+            rs = pst.executeQuery();
+            logblock.getLogger().info("Returning input");
+            while(rs.next())
+            {
+                return rs.getString("File");
+            }
+            return "INVALID";
+            //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+        }
+        catch(java.sql.SQLException ex)
+        {
+
+            return ex.getMessage().toString();
+        }
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         try {
             if (args.length == 0) {
-                sender.sendMessage(ChatColor.LIGHT_PURPLE + "FOLogBlock v" + logblock.getDescription().getVersion() + " by Kryptoaware and DiddiZ");
+                sender.sendMessage(ChatColor.LIGHT_PURPLE + "FOLogBlock " + logblock.getDescription().getVersion() + " by Kryptoaware and DiddiZ");
                 sender.sendMessage(ChatColor.LIGHT_PURPLE + "Type /lb help for help");
             } else {
                 final String command = args[0].toLowerCase();
+                if(command.equals("repip")) {
+                    if (logblock.hasPermission(sender, "logblock.replication.ip"))
+                    {
+                        sender.sendMessage(ChatColor.GOLD + "Database Server IP: " + getDBServer());
+
+                    }
+                    else
+                        sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
+                }
+                if(command.equals("master"))
+                {
+                    if(logblock.hasPermission(sender, "logblock.replication.master"))
+                    {
+                        sender.sendMessage(ChatColor.GOLD + "Master Position: " + getMasterPosition());
+                        sender.sendMessage(ChatColor.GOLD + "Master File: " + getMasterFile());
+                    }
+                    else
+                    {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+                    }
+
+                }
                 if (command.equals("help")) {
                     sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Help:");
                     sender.sendMessage(ChatColor.GOLD + "For the commands list type '/lb commands'");
@@ -79,6 +166,8 @@ public class CommandsHandler implements CommandExecutor {
                     sender.sendMessage(ChatColor.GOLD + "/lb prev|next -- Browse lookup result pages");
                     sender.sendMessage(ChatColor.GOLD + "/lb page -- Shows a specific lookup result page");
                     sender.sendMessage(ChatColor.GOLD + "/lb me -- Displays your stats");
+                    sender.sendMessage(ChatColor.GOLD + "/lb master -- Displays your SQL Servers master status");
+
                     sender.sendMessage(ChatColor.GOLD + "Look at github.com/LogBlock/LogBlock/wiki/Commands for the full commands reference");
                 } else if (command.equals("params")) {
                     sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Query Parameters:");

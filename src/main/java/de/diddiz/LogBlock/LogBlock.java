@@ -1,5 +1,7 @@
 package de.diddiz.LogBlock;
 
+import com.zaxxer.hikari.proxy.HikariPreparedStatementProxy;
+import com.zaxxer.hikari.proxy.HikariResultSetProxy;
 import de.diddiz.LogBlock.config.Config;
 import de.diddiz.LogBlock.listeners.*;
 import de.diddiz.util.MySQLConnectionPool;
@@ -29,7 +31,9 @@ import static org.bukkit.Bukkit.getPluginManager;
 
 public class LogBlock extends JavaPlugin {
     private static LogBlock logblock = null;
-    private MySQLConnectionPool pool;
+    public HikariPreparedStatementProxy st;
+    public HikariResultSetProxy rs;
+    public MySQLConnectionPool pool;
     private Consumer consumer = null;
     private CommandsHandler commandsHandler;
     private Updater updater = null;
@@ -106,6 +110,7 @@ public class LogBlock extends JavaPlugin {
             }
         }
         commandsHandler = new CommandsHandler(this);
+
         getCommand("lb").setExecutor(commandsHandler);
         if (enableAutoClearLog && autoClearLogDelay > 0) {
             getServer().getScheduler().runTaskTimerAsynchronously(this, new AutoClearLog(this), 6000, autoClearLogDelay * 60 * 20);
