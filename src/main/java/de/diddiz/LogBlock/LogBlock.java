@@ -3,6 +3,7 @@ package de.diddiz.LogBlock;
 import com.zaxxer.hikari.proxy.HikariPreparedStatementProxy;
 import com.zaxxer.hikari.proxy.HikariResultSetProxy;
 import de.diddiz.LogBlock.config.Config;
+import de.diddiz.LogBlock.events.slavenotificationEvent;
 import de.diddiz.LogBlock.listeners.*;
 import de.diddiz.util.MySQLConnectionPool;
 import de.diddiz.worldedit.WorldEditLoggingHook;
@@ -478,6 +479,7 @@ public class LogBlock extends JavaPlugin {
     private void registerEvents() {
         final PluginManager pm = getPluginManager();
         pm.registerEvents(new ToolListener(this), this);
+        pm.registerEvents(new slavenotificationEvent(this), this);
         pm.registerEvents(new PlayerInfoLogging(this), this);
         if (askRollbackAfterBan) {
             pm.registerEvents(new BanListener(this), this);
