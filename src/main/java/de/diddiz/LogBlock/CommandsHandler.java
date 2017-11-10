@@ -132,6 +132,22 @@ public class CommandsHandler implements CommandExecutor {
                     else
                         sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
                 }
+                if(command.equals("slavestatus"))
+                {
+                    if(logblock.hasPermission(sender, "logblock.replication.slavestatus"))
+                    {
+                        sender.sendMessage( ChatColor.GREEN + "FOLogblock Slave Status: ");
+                        sender.sendMessage(ChatColor.GOLD + "SLAVE IO Status: " + logblock.getSlaveInfo("iostatus"));
+                        sender.sendMessage(ChatColor.GOLD + "Master File: " + logblock.getSlaveInfo("masterfile"));
+                        sender.sendMessage(ChatColor.GOLD + "Slave IO Running: " + logblock.getSlaveInfo("slaveiorunning"));
+                        sender.sendMessage(ChatColor.GOLD + "Slave SQL Running: " + logblock.getSlaveInfo("slavesqlrunning"));
+                        sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + logblock.getSlaveInfo("lasterrornum"));
+                        sender.sendMessage(ChatColor.GOLD + "Last Error : " + logblock.getSlaveInfo("lasterror"));
+                        sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + logblock.getSlaveInfo("lastioerror"));
+                        sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + logblock.getSlaveInfo("lastsqlerrornum"));
+                        sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + logblock.getSlaveInfo("lastsqlerror"));
+                    }
+                }
                 if(command.equals("master"))
                 {
                     if(logblock.hasPermission(sender, "logblock.replication.master"))

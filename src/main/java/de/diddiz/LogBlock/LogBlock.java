@@ -10,16 +10,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -31,13 +30,13 @@ import static org.bukkit.Bukkit.getPluginManager;
 
 public class LogBlock extends JavaPlugin {
     private static LogBlock logblock = null;
-    public HikariPreparedStatementProxy st;
-    public HikariResultSetProxy rs;
     public MySQLConnectionPool pool;
     private Consumer consumer = null;
     private CommandsHandler commandsHandler;
     private Updater updater = null;
     private Timer timer = null;
+    public PreparedStatement pst;
+    public ResultSet rs;
     private boolean errorAtLoading = false, noDb = false, connected = true;
 
     public static LogBlock getInstance() {
@@ -145,6 +144,337 @@ public class LogBlock extends JavaPlugin {
         }
     }
 
+    public String getSlaveInfo(String rucase)
+    {
+        switch(rucase) {
+            case "iostatus": {
+                try {
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while (rs.next()) {
+                        return rs.getString(1);
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                } catch (java.sql.SQLException ex) {
+
+                    return ex.getMessage().toString();
+                }
+
+            }
+            case "masterfile":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getString(6);
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "masterfilepos":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(7).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "slaveiorunning":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(11).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "slavesqlrunning":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(12).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lasterrornum":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(19).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lasterror":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(20).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lastioerrornum":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(35).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lastioerror":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(36).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lastsqlerrornum":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(37).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lastsqlerror":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(38).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+
+        }
+        return "invalid";
+
+    }
+
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        if (logblock.getConfig().getInt(("fo.servers")) == 2) {
+
+            if (event.getPlayer().isPermissionSet("logblock.fo.status") || event.getPlayer().isOp() ) {
+                if (getSlaveInfo("iostatus").equalsIgnoreCase("Reconnecting after a failed binlog dump request")) {
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator!");
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+
+                }
+                if (getSlaveInfo("iostatus").equalsIgnoreCase("Reconnecting after a failed master event read")) {
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator!");
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+
+                }
+                if (getSlaveInfo("iostatus").equalsIgnoreCase("Waiting for the slave SQL thread to free enough relay log space")) {
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage( ChatColor.RED + "The RelayLog has run out of space!!!!");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator immediately!");
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+
+                }
+                if (getSlaveInfo("iostatus").equalsIgnoreCase("Waiting to reconnect after a failed binlog dump request")) {
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator!");
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+
+                }
+                if (getSlaveInfo("iostatus").equalsIgnoreCase("Waiting to reconnect after a failed master event read")) {
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator!");
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+
+                }
+                else
+                {
+                    event.getPlayer().sendRawMessage( ChatColor.GREEN + "FOLogblock Slave Status: ");
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
+                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+                }
+
+            }
+        }
+    }
     private void registerEvents() {
         final PluginManager pm = getPluginManager();
         pm.registerEvents(new ToolListener(this), this);
