@@ -48,6 +48,243 @@ public class CommandsHandler implements CommandExecutor {
         scheduler = logblock.getServer().getScheduler();
         questioner = (LogBlockQuestioner) logblock.getServer().getPluginManager().getPlugin("LogBlockQuestioner");
     }
+    public String getSlaveInfo(String rucase)
+    {
+
+        switch(rucase) {
+            case "iostatus": {
+                try {
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while (rs.next()) {
+                        return rs.getString(1);
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                } catch (java.sql.SQLException ex) {
+
+                    return ex.getMessage().toString();
+                }
+
+            }
+            case "masterfile":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getString(6);
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "masterfilepos":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(7).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "slaveiorunning":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(11).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "slavesqlrunning":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(12).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lasterrornum":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(19).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lasterror":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(20).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lastioerrornum":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(35).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lastioerror":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(36).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lastsqlerrornum":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(37).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+            case "lastsqlerror":
+            {
+                try{
+                    logblock.getLogger().info("Preparing statement");
+                    pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+                    logblock.getLogger().info("Executing query");
+                    rs = pst.executeQuery();
+                    logblock.getLogger().info("Returning input");
+                    while(rs.next())
+                    {
+                        return rs.getObject(38).toString();
+                    }
+                    return "INVALID";
+                    //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+                }
+                catch(java.sql.SQLException ex)
+                {
+
+                    return ex.getMessage().toString();
+                }
+            }
+
+        }
+        return "invalid";
+
+    }
     public String getDBServer()
     {
         try{
@@ -128,6 +365,22 @@ public class CommandsHandler implements CommandExecutor {
                     {
                         sender.sendMessage(ChatColor.GOLD + "Database Server IP: " + getDBServer());
 
+                    }
+                    else
+                        sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
+                }
+                if(command.equals("slaveerrors"))
+                {
+                    if(logblock.hasPermission(sender,"fo.command.lasterrors"))
+                    {
+                        sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                    logblock.getLogger().info("Attempting 7");
+                    sender.sendMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
+                    logblock.getLogger().info("Attempting 8");
+                    sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
+                    logblock.getLogger().info("Attempting 9");
+                    sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
+                    sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
                     }
                     else
                         sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
