@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 public final class slavenotificationEvent implements Listener{
     public PreparedStatement pst;
     public ResultSet rs;
+    public String returnoutput;
     private final LogBlock logblock;
     public slavenotificationEvent(LogBlock lb)
     {
@@ -29,9 +30,10 @@ public final class slavenotificationEvent implements Listener{
                     rs = pst.executeQuery();
                     //logblock.getLogger().info("Returning input");
                     while (rs.next()) {
-                        return rs.getString(1);
+                        returnoutput =  rs.getString(1);
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 } catch (java.sql.SQLException ex) {
 
@@ -49,9 +51,10 @@ public final class slavenotificationEvent implements Listener{
                     //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getString(6);
+                        returnoutput = rs.getString(6);
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -70,9 +73,10 @@ public final class slavenotificationEvent implements Listener{
                     //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(7).toString();
+                        returnoutput =  rs.getObject(7).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -91,9 +95,10 @@ public final class slavenotificationEvent implements Listener{
                     logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(11).toString();
+                        returnoutput = rs.getObject(11).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -112,9 +117,10 @@ public final class slavenotificationEvent implements Listener{
                     logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(12).toString();
+                        returnoutput =  rs.getObject(12).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -133,9 +139,10 @@ public final class slavenotificationEvent implements Listener{
                     logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(19).toString();
+                        returnoutput = rs.getObject(19).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -154,9 +161,10 @@ public final class slavenotificationEvent implements Listener{
                     //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(20).toString();
+                        returnoutput = rs.getObject(20).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -175,9 +183,10 @@ public final class slavenotificationEvent implements Listener{
                     //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(35).toString();
+                        returnoutput = rs.getObject(35).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -196,9 +205,10 @@ public final class slavenotificationEvent implements Listener{
                     logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(36).toString();
+                        returnoutput = rs.getObject(36).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -217,9 +227,10 @@ public final class slavenotificationEvent implements Listener{
                     //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(37).toString();
+                        returnoutput = rs.getObject(37).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
                 }
                 catch(java.sql.SQLException ex)
@@ -238,10 +249,12 @@ public final class slavenotificationEvent implements Listener{
                     //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
-                        return rs.getObject(38).toString();
+                        returnoutput = rs.getObject(38).toString();
+                        rs.close();
                     }
-                    return "INVALID";
+                    return returnoutput;
                     //  return logblock.pool.executeQuery("SHOW VARIABLES like 'bind_address';").getString("Value");
+
                 }
                 catch(java.sql.SQLException ex)
                 {
@@ -251,7 +264,7 @@ public final class slavenotificationEvent implements Listener{
             }
 
         }
-        return "invalid";
+        return returnoutput;
 
     }
 
