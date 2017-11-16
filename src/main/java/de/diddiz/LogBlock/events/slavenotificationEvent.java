@@ -23,11 +23,11 @@ public final class slavenotificationEvent implements Listener{
         switch(rucase) {
             case "iostatus": {
                 try {
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
-                    logblock.getLogger().info("Returning input");
+                    //logblock.getLogger().info("Returning input");
                     while (rs.next()) {
                         return rs.getString(1);
                     }
@@ -42,11 +42,11 @@ public final class slavenotificationEvent implements Listener{
             case "masterfile":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
-                    logblock.getLogger().info("Returning input");
+                    //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
                         return rs.getString(6);
@@ -63,11 +63,11 @@ public final class slavenotificationEvent implements Listener{
             case "masterfilepos":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                   // logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                   // logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
-                    logblock.getLogger().info("Returning input");
+                    //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
                         return rs.getObject(7).toString();
@@ -84,9 +84,9 @@ public final class slavenotificationEvent implements Listener{
             case "slaveiorunning":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
                     logblock.getLogger().info("Returning input");
                     while(rs.next())
@@ -105,9 +105,9 @@ public final class slavenotificationEvent implements Listener{
             case "slavesqlrunning":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
                     logblock.getLogger().info("Returning input");
                     while(rs.next())
@@ -126,9 +126,9 @@ public final class slavenotificationEvent implements Listener{
             case "lasterrornum":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
                     logblock.getLogger().info("Returning input");
                     while(rs.next())
@@ -147,11 +147,11 @@ public final class slavenotificationEvent implements Listener{
             case "lasterror":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
-                    logblock.getLogger().info("Returning input");
+                    //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
                         return rs.getObject(20).toString();
@@ -168,11 +168,11 @@ public final class slavenotificationEvent implements Listener{
             case "lastioerrornum":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
-                    logblock.getLogger().info("Returning input");
+                    //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
                         return rs.getObject(35).toString();
@@ -189,9 +189,9 @@ public final class slavenotificationEvent implements Listener{
             case "lastioerror":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
                     logblock.getLogger().info("Returning input");
                     while(rs.next())
@@ -210,11 +210,11 @@ public final class slavenotificationEvent implements Listener{
             case "lastsqlerrornum":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
-                    logblock.getLogger().info("Returning input");
+                    //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
                         return rs.getObject(37).toString();
@@ -231,11 +231,11 @@ public final class slavenotificationEvent implements Listener{
             case "lastsqlerror":
             {
                 try{
-                    logblock.getLogger().info("Preparing statement");
+                    //logblock.getLogger().info("Preparing statement");
                     pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
-                    logblock.getLogger().info("Executing query");
+                    //logblock.getLogger().info("Executing query");
                     rs = pst.executeQuery();
-                    logblock.getLogger().info("Returning input");
+                    //logblock.getLogger().info("Returning input");
                     while(rs.next())
                     {
                         return rs.getObject(38).toString();
@@ -263,73 +263,55 @@ public final class slavenotificationEvent implements Listener{
             if (event.getPlayer().isPermissionSet("logblock.fo.status") || event.getPlayer().isOp()) {
                 if (getSlaveInfo("iostatus").equalsIgnoreCase("Reconnecting after a failed binlog dump request")) {
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "For more info use the /lb slaveerrors commands");
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator!");
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
 
                 }
                 if (getSlaveInfo("iostatus").equalsIgnoreCase("Reconnecting after a failed master event read")) {
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "For more info use the /lb slaveerrors commands");
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator!");
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+
 
                 }
                 if (getSlaveInfo("iostatus").equalsIgnoreCase("Waiting for the slave SQL thread to free enough relay log space")) {
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "For more info use the /lb slaveerrors commands");
                     event.getPlayer().sendRawMessage(ChatColor.RED + "The RelayLog has run out of space!!!!");
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator immediately!");
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
 
                 }
                 if (getSlaveInfo("iostatus").equalsIgnoreCase("Waiting to reconnect after a failed binlog dump request")) {
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "For more info use the /lb slaveerrors commands");
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator!");
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
 
                 }
                 if (getSlaveInfo("iostatus").equalsIgnoreCase("Waiting to reconnect after a failed master event read")) {
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
+                    event.getPlayer().sendRawMessage(ChatColor.RED + "For more info use the /lb slaveerrors commands");
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Please contact your database administrator!");
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + getSlaveInfo("iostatus"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + getSlaveInfo("masterfile"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + getSlaveInfo("slaveiorunning"));
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + getSlaveInfo("slavesqlrunning"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
-                    event.getPlayer().sendRawMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+
 
                 } else {
                     logblock.getLogger().info("Attempting 1");

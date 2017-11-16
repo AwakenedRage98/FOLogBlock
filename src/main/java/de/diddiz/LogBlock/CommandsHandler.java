@@ -435,6 +435,7 @@ public class CommandsHandler implements CommandExecutor {
                     sender.sendMessage(ChatColor.GOLD + "/lb prev|next -- Browse lookup result pages");
                     sender.sendMessage(ChatColor.GOLD + "/lb page -- Shows a specific lookup result page");
                     sender.sendMessage(ChatColor.GOLD + "/lb me -- Displays your stats");
+                    sender.sendMessage(ChatColor.GOLD + "/lb slaveerror --- Displays the errors for the Replication Slave");
                     sender.sendMessage(ChatColor.GOLD + "/lb master -- Displays your SQL Servers master status");
 
                     sender.sendMessage(ChatColor.GOLD + "Look at github.com/LogBlock/LogBlock/wiki/Commands for the full commands reference");
