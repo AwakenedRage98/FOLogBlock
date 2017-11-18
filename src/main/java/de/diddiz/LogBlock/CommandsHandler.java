@@ -39,6 +39,15 @@ import static org.bukkit.Bukkit.getServer;
 public class CommandsHandler implements CommandExecutor {
     public PreparedStatement pst;
     public ResultSet rs;
+    public String iostatus;
+    public String masterfile;
+    public String masterfilepos;
+    public String slaveIO;
+    public String SlaveSQL;
+    public String lastSQLError;
+    public String lastSQLErrorNum;
+    public String lastError;
+    public String lastioerror;
     private final LogBlock logblock;
     private final BukkitScheduler scheduler;
     private final LogBlockQuestioner questioner;
@@ -48,6 +57,72 @@ public class CommandsHandler implements CommandExecutor {
         scheduler = logblock.getServer().getScheduler();
         questioner = (LogBlockQuestioner) logblock.getServer().getPluginManager().getPlugin("LogBlockQuestioner");
     }
+    public void setLastError(String error)
+    {
+        lastError = error;
+    }
+    public void setLastSQLError(String error)
+    {
+        lastSQLError = error;
+    }
+    public void setLastSQLErrorNum(String error)
+    {
+        lastSQLErrorNum = error;
+    }
+    public void SetLastIOError(String error)
+    {
+        lastioerror = error;
+    }
+    public void setIOStatus(String status)
+    {
+        iostatus = status;
+    }
+    public void setMasterFile(String file)
+    {
+        masterfile = file;
+    }
+    public void setSlaveIOState(String state)
+    {
+        slaveIO = state;
+    }
+    public void setSlaveSQLState(String state)
+    {
+        SlaveSQL = state;
+    }
+    public void setMasterFilePos(String pos)
+    {
+        masterfilepos = pos;
+    }
+
+    public void PrepareInfo() {
+        try {
+            //logblock.getLogger().info("Preparing statement");
+            pst = logblock.pool.getConnection().prepareStatement("SHOW SLAVE STATUS;");
+            //logblock.getLogger().info("Executing query");
+            rs = pst.executeQuery();
+            //logblock.getLogger().info("Returning input");
+            while (rs.next()) {
+                setIOStatus(rs.getString(1));
+                setMasterFile(rs.getString(6));
+                setMasterFilePos(rs.getObject(7).toString());
+                setSlaveIOState(rs.getObject(11).toString());
+                setSlaveSQLState(rs.getObject(12).toString());
+                setLastError(rs.getObject(20).toString());
+                SetLastIOError(rs.getObject(36).toString());
+                setLastSQLError(rs.getObject(38).toString());
+
+
+
+
+                rs.close();
+            }
+        }
+        catch(java.sql.SQLException ex)
+        {
+
+        }
+    }
+
     public String getSlaveInfo(String rucase)
     {
 
@@ -373,14 +448,15 @@ public class CommandsHandler implements CommandExecutor {
                 {
                     if(logblock.hasPermission(sender,"fo.command.lasterrors"))
                     {
-                        sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
-                    logblock.getLogger().info("Attempting 7");
-                    sender.sendMessage(ChatColor.GOLD + "Last Error : " + getSlaveInfo("lasterror"));
+                        PrepareInfo();
+                      //  sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                    //logblock.getLogger().info("Attempting 7");
+                    sender.sendMessage(ChatColor.RED + "Last Error : " + lastError);
                     logblock.getLogger().info("Attempting 8");
-                    sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + getSlaveInfo("lastioerror"));
+                    sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + lastioerror);
                     logblock.getLogger().info("Attempting 9");
-                    sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum"));
-                    sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + getSlaveInfo("lastsqlerror"));
+                    //sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum");
+                    sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + lastSQLError);
                     }
                     else
                         sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
@@ -389,24 +465,25 @@ public class CommandsHandler implements CommandExecutor {
                 {
                     if(logblock.hasPermission(sender, "logblock.replication.slavestatus"))
                     {
+                        PrepareInfo();
                         sender.sendMessage( ChatColor.GREEN + "FOLogblock Slave Status: ");
-                        sender.sendMessage(ChatColor.GOLD + "SLAVE IO Status: " + logblock.getSlaveInfo("iostatus"));
-                        sender.sendMessage(ChatColor.GOLD + "Master File: " + logblock.getSlaveInfo("masterfile"));
-                        sender.sendMessage(ChatColor.GOLD + "Slave IO Running: " + logblock.getSlaveInfo("slaveiorunning"));
-                        sender.sendMessage(ChatColor.GOLD + "Slave SQL Running: " + logblock.getSlaveInfo("slavesqlrunning"));
-                        sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + logblock.getSlaveInfo("lasterrornum"));
-                        sender.sendMessage(ChatColor.GOLD + "Last Error : " + logblock.getSlaveInfo("lasterror"));
-                        sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + logblock.getSlaveInfo("lastioerror"));
-                        sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + logblock.getSlaveInfo("lastsqlerrornum"));
-                        sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + logblock.getSlaveInfo("lastsqlerror"));
+                        sender.sendMessage(ChatColor.GOLD + "SLAVE IO Status: " + slaveIO);
+                        sender.sendMessage(ChatColor.GOLD + "Master File: " + masterfile);
+                        sender.sendMessage(ChatColor.GOLD + "Slave IO Running: " + slaveIO);
+                        sender.sendMessage(ChatColor.GOLD + "Slave SQL Running: " + SlaveSQL);
+                        //sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + logblock.getSlaveInfo("lasterrornum"));
+                        sender.sendMessage(ChatColor.GOLD + "Last Error : " + lastError);
+                        sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + lastioerror);
+                        //sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + logblock.getSlaveInfo("lastsqlerrornum"));
+                        sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + lastSQLError);
                     }
                 }
                 if(command.equals("master"))
                 {
                     if(logblock.hasPermission(sender, "logblock.replication.master"))
                     {
-                        sender.sendMessage(ChatColor.GOLD + "Master Position: " + getMasterPosition());
-                        sender.sendMessage(ChatColor.GOLD + "Master File: " + getMasterFile());
+                        sender.sendMessage(ChatColor.GOLD + "Master Position: " + masterfilepos);
+                        sender.sendMessage(ChatColor.GOLD + "Master File: " + masterfile);
                     }
                     else
                     {
