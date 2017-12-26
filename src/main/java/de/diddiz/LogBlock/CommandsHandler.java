@@ -444,52 +444,122 @@ public class CommandsHandler implements CommandExecutor {
                     else
                         sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
                 }
+                if(command.equals("togglenotification"))
+                {
+                    if(logblock.hasPermission(sender, "fo.command.notificationtoggle"))
+                    {
+                        if(logblock.notificationsenabled == true)
+                        {
+                            logblock.notificationsenabled = false;
+                            sender.sendMessage("Notification toggled!");
+                        }
+                        else
+                        {
+
+                            logblock.notificationsenabled = true;
+                            sender.sendMessage("Notification toggled!");
+                        }
+                    }
+                    else
+                        sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
+                }
+                if(command.equals("togglenotification"))
+                {
+                    if(logblock.hasPermission(sender, "fo.command.notificationtoggle"))
+                    {
+                        if(logblock.debugtoggle == true)
+                        {
+                            logblock.debugtoggle = false;
+                            sender.sendMessage("Nebug toggled!");
+                        }
+                        else
+                        {
+
+
+                            sender.sendMessage(ChatColor.RED + "WARNING: THIS WILL CAUSE LAG ON THE SERVER IF YOU RUN DEBUG COMMANDS. Please type confirmdebug");
+                        }
+                    }
+                    else
+                        sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
+                }
+                if(command.equals("confirmdebug"))
+                {
+                    if(logblock.hasPermission(sender, "fo.command.admin.debugconfirm"))
+                    {
+                        if(logblock.debugtoggle == false)
+                        {
+                            logblock.debugtoggle = false;
+                            sender.sendMessage( ChatColor.RED + "Debug enabled, if you want to disable debug issue the same command to toggle it.");
+
+                        }
+                    }
+                }
                 if(command.equals("slaveerrors"))
                 {
                     if(logblock.hasPermission(sender,"fo.command.lasterrors"))
                     {
-                        PrepareInfo();
-                      //  sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
-                    //logblock.getLogger().info("Attempting 7");
-                    sender.sendMessage(ChatColor.RED + "Last Error : " + lastError);
-                    logblock.getLogger().info("Attempting 8");
-                    sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + lastioerror);
-                    logblock.getLogger().info("Attempting 9");
-                    //sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum");
-                    sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + lastSQLError);
+                        if(logblock.debugtoggle == true)
+                        {
+                            PrepareInfo();
+                            //  sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
+                            //logblock.getLogger().info("Attempting 7");
+                            sender.sendMessage(ChatColor.RED + "Last Error : " + lastError);
+                            logblock.getLogger().info("Attempting 8");
+                            sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + lastioerror);
+                            logblock.getLogger().info("Attempting 9");
+                            //sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum");
+                            sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + lastSQLError);
+                        }
+                        if(logblock.debugtoggle == false)
+                        {
+                            sender.sendMessage(ChatColor.RED + "Debug mode isnt enabled!");
+                        }
+
+
                     }
                     else
                         sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
                 }
                 if(command.equals("slavestatus"))
                 {
-                    if(logblock.hasPermission(sender, "logblock.replication.slavestatus"))
+                    if(logblock.debugtoggle == true)
                     {
-                        PrepareInfo();
-                        sender.sendMessage( ChatColor.GREEN + "FOLogblock Slave Status: ");
-                        sender.sendMessage(ChatColor.GOLD + "SLAVE IO Status: " + slaveIO);
-                        sender.sendMessage(ChatColor.GOLD + "Master File: " + masterfile);
-                        sender.sendMessage(ChatColor.GOLD + "Slave IO Running: " + slaveIO);
-                        sender.sendMessage(ChatColor.GOLD + "Slave SQL Running: " + SlaveSQL);
-                        //sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + logblock.getSlaveInfo("lasterrornum"));
-                        sender.sendMessage(ChatColor.GOLD + "Last Error : " + lastError);
-                        sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + lastioerror);
-                        //sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + logblock.getSlaveInfo("lastsqlerrornum"));
-                        sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + lastSQLError);
-                    }
-                }
-                if(command.equals("master"))
-                {
-                    if(logblock.hasPermission(sender, "logblock.replication.master"))
-                    {
-                        sender.sendMessage(ChatColor.GOLD + "Master Position: " + masterfilepos);
-                        sender.sendMessage(ChatColor.GOLD + "Master File: " + masterfile);
+                        if(logblock.hasPermission(sender, "logblock.replication.slavestatus"))
+                        {
+                            PrepareInfo();
+                            sender.sendMessage( ChatColor.GREEN + "FOLogblock Slave Status: ");
+                            sender.sendMessage(ChatColor.GOLD + "SLAVE IO Status: " + slaveIO);
+                            sender.sendMessage(ChatColor.GOLD + "Master File: " + masterfile);
+                            sender.sendMessage(ChatColor.GOLD + "Slave IO Running: " + slaveIO);
+                            sender.sendMessage(ChatColor.GOLD + "Slave SQL Running: " + SlaveSQL);
+                            //sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + logblock.getSlaveInfo("lasterrornum"));
+                            sender.sendMessage(ChatColor.GOLD + "Last Error : " + lastError);
+                            sender.sendMessage(ChatColor.GOLD + "Last IO Error : " + lastioerror);
+                            //sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + logblock.getSlaveInfo("lastsqlerrornum"));
+                            sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + lastSQLError);
+                        }
                     }
                     else
                     {
-                        sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+                        sender.sendMessage(ChatColor.RED + "Debug mode isnt enabled!");
                     }
 
+                }
+                if(command.equals("master"))
+                {
+                    if(logblock.debugtoggle == true) {
+
+                        if (logblock.hasPermission(sender, "logblock.replication.master")) {
+                            sender.sendMessage(ChatColor.GOLD + "Master Position: " + masterfilepos);
+                            sender.sendMessage(ChatColor.GOLD + "Master File: " + masterfile);
+                        } else {
+                            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+                        }
+                    }
+                    else
+                    {
+                        sender.sendMessage(ChatColor.RED + "Debug mode isnt enabled!");
+                    }
                 }
                 if (command.equals("help")) {
                     sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Help:");

@@ -1,5 +1,7 @@
 package de.diddiz.LogBlock.events;
 
+import com.sun.org.glassfish.gmbal.DescriptorFields;
+import com.sun.org.glassfish.gmbal.ParameterNames;
 import de.diddiz.LogBlock.LogBlock;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -14,6 +16,7 @@ public final class slavenotificationEvent implements Listener {
     public ResultSet rs;
     public String returnoutput;
     public String iostatus;
+
     public String masterfile;
     public String masterfilepos;
     public String slaveIO;
@@ -24,6 +27,11 @@ public final class slavenotificationEvent implements Listener {
         logblock = lb;
     }
 
+    /**
+     * Sets the
+     *
+     * @param text  the text of the tool tip
+     */
     public void setIOStatus(String status)
     {
         iostatus = status;
@@ -71,8 +79,12 @@ public final class slavenotificationEvent implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (logblock.getConfig().getInt(("fo.servers")) == 2) {
-
-            if (event.getPlayer().isPermissionSet("logblock.fo.status") || event.getPlayer().isOp()) {
+            if(logblock.notificationsenabled == true)
+            {
+                if (!(event.getPlayer().isPermissionSet("logblock.fo.status") || event.getPlayer().isOp())){
+                    logblock.notificationsenabled = false;
+                }
+                    if (event.getPlayer().isPermissionSet("logblock.fo.status") || event.getPlayer().isOp()) {
                 PrepareInfo();
                 if (iostatus.equalsIgnoreCase("Reconnecting after a failed binlog dump request")) {
                     event.getPlayer().sendRawMessage(ChatColor.RED + "Your database slave is not connected to the master. It is currently not replicating...");
@@ -126,13 +138,15 @@ public final class slavenotificationEvent implements Listener {
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + SlaveSQL);
 
                 } else {
-                    event.getPlayer().sendRawMessage( ChatColor.GREEN + "FOLogblock Status: ");
+                    event.getPlayer().sendRawMessage(ChatColor.GREEN + "FOLogblock Status: ");
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "SLAVE IO Status: " + iostatus);
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Master File: " + masterfile);
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave IO Running: " + slaveIO);
                     event.getPlayer().sendRawMessage(ChatColor.GOLD + "Slave SQL Running: " + SlaveSQL);
                 }
+                logblock.notificationsenabled = false;
 
+                }
             }
         }
     }

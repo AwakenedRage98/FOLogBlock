@@ -1,7 +1,7 @@
 package de.diddiz.LogBlock;
 
-import com.zaxxer.hikari.proxy.HikariPreparedStatementProxy;
-import com.zaxxer.hikari.proxy.HikariResultSetProxy;
+import com.zaxxer.hikari.pool.ProxyPreparedStatement;
+import com.zaxxer.hikari.pool.HikariProxyResultSet;
 import de.diddiz.LogBlock.config.Config;
 import de.diddiz.LogBlock.events.slavenotificationEvent;
 import de.diddiz.LogBlock.listeners.*;
@@ -36,6 +36,10 @@ public class LogBlock extends JavaPlugin {
     private CommandsHandler commandsHandler;
     private Updater updater = null;
     private Timer timer = null;
+    //Notification Variables
+    public boolean notificationsenabled = true;
+    public boolean debugtoggle = false;
+    //END OF NOTIFICATION VARIABLES
     public PreparedStatement pst;
     public ResultSet rs;
     private boolean errorAtLoading = false, noDb = false, connected = true;
