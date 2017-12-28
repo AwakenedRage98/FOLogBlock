@@ -435,71 +435,61 @@ public class CommandsHandler implements CommandExecutor {
                 sender.sendMessage(ChatColor.LIGHT_PURPLE + "Type /lb help for help");
             } else {
                 final String command = args[0].toLowerCase();
-                if(command.equals("repip")) {
-                    if (logblock.hasPermission(sender, "logblock.replication.ip"))
-                    {
-                        sender.sendMessage(ChatColor.GOLD + "Database Server IP: " + getDBServer());
+                if (command.equals("repip")) {
+                    if (logblock.debugtoggle == true) {
+                        if (logblock.hasPermission(sender, "logblock.replication.ip")) {
+                            sender.sendMessage(ChatColor.GOLD + "Database Server IP: " + getDBServer());
 
+                        } else
+                            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+                    } else if (logblock.hasPermission(sender, "logblock.replication.ip")) {
+                        sender.sendMessage(ChatColor.RED + "Debug mode is not enabled to run this command.");
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
                     }
-                    else
-                        sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
                 }
-                if(command.equals("togglenotification"))
-                {
-                    if(logblock.hasPermission(sender, "fo.command.notificationtoggle"))
-                    {
-                        if(logblock.notificationsenabled == true)
-                        {
+
+
+                if (command.equals("togglenotification")) {
+                    if (logblock.hasPermission(sender, "fo.command.notificationtoggle")) {
+                        if (logblock.notificationsenabled == true) {
                             logblock.notificationsenabled = false;
                             sender.sendMessage("Notification toggled!");
-                        }
-                        else
-                        {
+                        } else {
 
                             logblock.notificationsenabled = true;
                             sender.sendMessage("Notification toggled!");
+                            logblock.getLogger().warning(sender.getName() + " enabled notifications!");
                         }
-                    }
-                    else
-                        sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
+                    } else
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
                 }
-                if(command.equals("togglenotification"))
-                {
-                    if(logblock.hasPermission(sender, "fo.command.notificationtoggle"))
-                    {
-                        if(logblock.debugtoggle == true)
-                        {
+                if (command.equals("toggledebug")) {
+                    if (logblock.hasPermission(sender, "fo.command.debugtoggle")) {
+                        if (logblock.debugtoggle == true) {
                             logblock.debugtoggle = false;
                             sender.sendMessage("Nebug toggled!");
-                        }
-                        else
-                        {
+                        } else {
 
 
-                            sender.sendMessage(ChatColor.RED + "WARNING: THIS WILL CAUSE LAG ON THE SERVER IF YOU RUN DEBUG COMMANDS. Please type confirmdebug");
+                            sender.sendMessage(ChatColor.RED + "WARNING: THIS WILL CAUSE LAG ON THE SERVER IF YOU RUN DEBUG COMMANDS. Please type confirmdebug to continue");
                         }
-                    }
-                    else
-                        sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
+                    } else
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
                 }
-                if(command.equals("confirmdebug"))
-                {
-                    if(logblock.hasPermission(sender, "fo.command.admin.debugconfirm"))
-                    {
-                        if(logblock.debugtoggle == false)
-                        {
+                if (command.equals("confirmdebug")) {
+                    if (logblock.hasPermission(sender, "fo.command.admin.debugconfirm")) {
+                        if (logblock.debugtoggle == false) {
                             logblock.debugtoggle = false;
-                            sender.sendMessage( ChatColor.RED + "Debug enabled, if you want to disable debug issue the same command to toggle it.");
+                            sender.sendMessage(ChatColor.RED + "Debug enabled, if you want to disable debug issue the same command to toggle it.");
+                            logblock.getLogger().warning(sender.getName() + " enabled debug mode!");
 
                         }
                     }
                 }
-                if(command.equals("slaveerrors"))
-                {
-                    if(logblock.hasPermission(sender,"fo.command.lasterrors"))
-                    {
-                        if(logblock.debugtoggle == true)
-                        {
+                if (command.equals("slaveerrors")) {
+                    if (logblock.hasPermission(sender, "fo.command.lasterrors")) {
+                        if (logblock.debugtoggle == true) {
                             PrepareInfo();
                             //  sender.sendMessage(ChatColor.GOLD + "Last ErrorCode : " + getSlaveInfo("lasterrornum"));
                             //logblock.getLogger().info("Attempting 7");
@@ -510,24 +500,19 @@ public class CommandsHandler implements CommandExecutor {
                             //sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + getSlaveInfo("lastsqlerrornum");
                             sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + lastSQLError);
                         }
-                        if(logblock.debugtoggle == false)
-                        {
+                        if (logblock.debugtoggle == false) {
                             sender.sendMessage(ChatColor.RED + "Debug mode isnt enabled!");
                         }
 
 
-                    }
-                    else
-                        sender.sendMessage( ChatColor.RED + "You do not have permission to use this command!");
+                    } else
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
                 }
-                if(command.equals("slavestatus"))
-                {
-                    if(logblock.debugtoggle == true)
-                    {
-                        if(logblock.hasPermission(sender, "logblock.replication.slavestatus"))
-                        {
+                if (command.equals("slavestatus")) {
+                    if (logblock.debugtoggle == true) {
+                        if (logblock.hasPermission(sender, "logblock.replication.slavestatus")) {
                             PrepareInfo();
-                            sender.sendMessage( ChatColor.GREEN + "FOLogblock Slave Status: ");
+                            sender.sendMessage(ChatColor.GREEN + "FOLogblock Slave Status: ");
                             sender.sendMessage(ChatColor.GOLD + "SLAVE IO Status: " + slaveIO);
                             sender.sendMessage(ChatColor.GOLD + "Master File: " + masterfile);
                             sender.sendMessage(ChatColor.GOLD + "Slave IO Running: " + slaveIO);
@@ -538,32 +523,37 @@ public class CommandsHandler implements CommandExecutor {
                             //sender.sendMessage(ChatColor.GOLD + "Last SQL Errorcode : " + logblock.getSlaveInfo("lastsqlerrornum"));
                             sender.sendMessage(ChatColor.GOLD + "Last SQL Error : " + lastSQLError);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         sender.sendMessage(ChatColor.RED + "Debug mode isnt enabled!");
                     }
 
                 }
-                if(command.equals("master"))
-                {
-                    if(logblock.debugtoggle == true) {
+                if (command.equals("master")) {
+                    if (logblock.debugtoggle == true) {
 
                         if (logblock.hasPermission(sender, "logblock.replication.master")) {
                             sender.sendMessage(ChatColor.GOLD + "Master Position: " + masterfilepos);
                             sender.sendMessage(ChatColor.GOLD + "Master File: " + masterfile);
+
                         } else {
                             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
                         }
-                    }
-                    else
-                    {
+                    } else {
                         sender.sendMessage(ChatColor.RED + "Debug mode isnt enabled!");
                     }
+                }
+                if (command.equals("debug"))
+                {
+                    sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Debug Commands:");
+                    sender.sendMessage(ChatColor.GOLD + "/lb slaveerror --- Displays the errors for the Replication Slave");
+                    sender.sendMessage(ChatColor.GOLD + "/lb master -- Displays your SQL Servers master status");
+                    sender.sendMessage(ChatColor.GOLD + "/lb slavestatus -- Displays your SQL Servers slave status");
+                    sender.sendMessage(ChatColor.GOLD + "/lb repip -- Displays your SQL Servers IP Address for the server currently being used.");
                 }
                 if (command.equals("help")) {
                     sender.sendMessage(ChatColor.DARK_AQUA + "FOLogBlock Help:");
                     sender.sendMessage(ChatColor.GOLD + "For the commands list type '/lb commands'");
+                    sender.sendMessage(ChatColor.GOLD + "For the commands list type '/lb debug'");
                     sender.sendMessage(ChatColor.GOLD + "For the parameters list type '/lb params'");
                     sender.sendMessage(ChatColor.GOLD + "For the list of permissions you got type '/lb permissions'");
                 } else if (command.equals("commands")) {
@@ -576,14 +566,15 @@ public class CommandsHandler implements CommandExecutor {
                     sender.sendMessage(ChatColor.GOLD + "/lb hide -- Hides you from log");
                     sender.sendMessage(ChatColor.GOLD + "/lb rollback [params] -- Rollback");
                     sender.sendMessage(ChatColor.GOLD + "/lb redo [params] -- Redo");
+                    sender.sendMessage( ChatColor.GOLD + " /lb togglenotification -- Toggles debug notification when a staff member joins the server");
+                    sender.sendMessage( ChatColor.GOLD + " /lb toggledebug -- Toggles debug mode");
                     sender.sendMessage(ChatColor.GOLD + "/lb tp [params] -- Teleports you to the location of griefing");
                     sender.sendMessage(ChatColor.GOLD + "/lb writelogfile [params] -- Writes a log file");
                     sender.sendMessage(ChatColor.GOLD + "/lb lookup [params] -- Lookup");
                     sender.sendMessage(ChatColor.GOLD + "/lb prev|next -- Browse lookup result pages");
                     sender.sendMessage(ChatColor.GOLD + "/lb page -- Shows a specific lookup result page");
                     sender.sendMessage(ChatColor.GOLD + "/lb me -- Displays your stats");
-                    sender.sendMessage(ChatColor.GOLD + "/lb slaveerror --- Displays the errors for the Replication Slave");
-                    sender.sendMessage(ChatColor.GOLD + "/lb master -- Displays your SQL Servers master status");
+
 
                     sender.sendMessage(ChatColor.GOLD + "Look at github.com/LogBlock/LogBlock/wiki/Commands for the full commands reference");
                 } else if (command.equals("params")) {
@@ -709,20 +700,24 @@ public class CommandsHandler implements CommandExecutor {
                 } else if (command.equals("hide")) {
                     if (sender instanceof Player) {
                         if (logblock.hasPermission(sender, "logblock.hide")) {
-                            if (args.length == 2) {
-                                if (args[1].equalsIgnoreCase("on")) {
-                                    Consumer.hide((Player) sender);
-                                    sender.sendMessage(ChatColor.GREEN + "You are now hidden and aren't logged. Type /lb hide to unhide.");
-                                } else if (args[1].equalsIgnoreCase("off")) {
-                                    Consumer.unHide((Player) sender);
-                                    sender.sendMessage(ChatColor.GREEN + "You aren't hidden any longer.");
+                            if (logblock.getConfig().getBoolean("fo.disablehide") == false) {
+                                if (args.length == 2) {
+                                    if (args[1].equalsIgnoreCase("on")) {
+                                        Consumer.hide((Player) sender);
+                                        sender.sendMessage(ChatColor.GREEN + "You are now hidden and aren't logged. Type /lb hide to unhide.");
+                                    } else if (args[1].equalsIgnoreCase("off")) {
+                                        Consumer.unHide((Player) sender);
+                                        sender.sendMessage(ChatColor.GREEN + "You aren't hidden any longer.");
+                                    }
                                 }
-                            } else {
-                                if (Consumer.toggleHide((Player) sender)) {
+                            }
+                        else {
+                             /*   if (Consumer.toggleHide((Player) sender)) {
                                     sender.sendMessage(ChatColor.GREEN + "You are now hidden and aren't logged. Type '/lb hide' again to unhide.");
                                 } else {
                                     sender.sendMessage(ChatColor.GREEN + "You aren't hidden any longer.");
                                 }
+                                */sender.sendMessage(ChatColor.RED + "This command has been disabled byt your administrator!");
                             }
                         } else {
                             sender.sendMessage(ChatColor.RED + "You aren't allowed to do this.");
