@@ -147,6 +147,19 @@ public class LogBlock extends JavaPlugin {
         } catch (IOException ex) {
             getLogger().info("Could not start metrics: " + ex.getMessage());
         }
+        if(getConfig().getBoolean("fo.disablenotification") == true)
+        {
+            notificationsenabled = true;
+        }
+        if(getConfig().getBoolean("fo.disablenotification") == false)
+        {
+            notificationsenabled = false;
+        }
+        if(getConfig().getBoolean("fo.debugenabled") == true)
+        {
+            debugtoggle = false;
+            //TODO ADD DISABLE DEBUG MODE
+        }
     }
 
     public String getSlaveInfo(String rucase)

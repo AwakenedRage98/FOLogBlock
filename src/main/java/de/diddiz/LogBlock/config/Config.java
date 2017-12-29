@@ -78,6 +78,8 @@ public class Config {
         def.put("fo.servers", 2);
         def.put("fo.enabled", false);
         def.put("fo.disablehide", true);
+        def.put("fo.disablenotification", true);
+        def.put("fo.debugenabled" ,false);
         def.put("consumer.delayBetweenRuns", 2);
         def.put("consumer.forceToProcessAtLeast", 200);
         def.put("consumer.timePerRun", 1000);
